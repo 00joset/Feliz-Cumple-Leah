@@ -1,0 +1,330 @@
+/*
+=============================
+1. ESTILOS BASE Y TIPOGRAFÍA
+============================
+*/
+
+:root {
+    /* Paleta de colores inspirada en la celebración y tonos que resaltan su piel */
+    --color-primary-dark: #C94C4C; /* Rojo quemado / Terracota */
+    --color-primary-light: #FFD700; /* Dorado vibrante */
+    --color-secondary-accent: #FF69B4; /* Fucsia / Rosa chicle */
+    --color-text-dark: #333333;
+    --color-text-light: #FFFFFF;
+    /* Fuentes Actualizadas: 'Great Vibes' para títulos (más elegante) e 'Inter' para el cuerpo (más moderno y legible) */
+    --font-heading: cursive, 'Great Vibes'; /* Se usará para títulos principales */
+    --font-body: 'Inter', sans-serif; /* Se usará para el cuerpo del texto */
+
+    /* Nuevas variables para el fondo animado */
+    --gradient-start: #FF6B6B; /* Rojo/Naranja */
+    --gradient-end: #FFD93D; /* Amarillo */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text-dark);
+    line-height: 1.7; 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+/*
+=============================
+2. FONDO ANIMADO (APLICADO A INDEX2 Y FELICITACIONES)
+=============================
+*/
+
+/* Contenedor principal del fondo, asegura que cubra toda la pantalla */
+.background-wrap {
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Clase para el fondo que aplica la animación de movimiento */
+.animated-background {
+    /* Mismos colores, pero el tamaño del fondo se agranda para que el movimiento sea sutil */
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 50%, var(--gradient-start) 100%);
+    background-size: 300% 300%; 
+    animation: animatedGradient 15s ease infinite; 
+}
+
+@keyframes animatedGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/*
+=============================
+3. CAJA PRINCIPAL (SOBRE EL FONDO)
+=============================
+*/
+
+/* Contenedor principal que simula estar 'sobre' el fondo, con esquinas redondeadas y blur */
+.main-overlay-container {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque para notar el fondo animado debajo */
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 25px; 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3); /* Sombra que da profundidad */
+    max-width: 950px; /* Un poco más ancho para el carrusel */
+    width: 95%;
+    padding: 30px 20px; /* Más padding vertical */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+/* Tarjeta interna (usada en index2.html para la carta) */
+.card-container {
+    background-color: var(--color-text-light); 
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%; 
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.9);
+    animation: scaleIn 0.8s ease-out forwards;
+}
+
+@keyframes scaleIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.scale-out {
+    animation: scaleOut 0.5s ease-in forwards;
+}
+
+@keyframes scaleOut {
+    to {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+/*
+============================================
+4. ESTILOS DE CARRUSEL (felicitaciones.html)
+============================================
+*/
+
+/* Contenedor que maneja el centrado y esconde el overflow horizontal */
+.message-carousel-wrap {
+    width: 100%;
+    overflow: hidden; 
+    padding: 20px 0;
+}
+
+/* Lista deslizable horizontalmente (el 'slide' de los mensajes) */
+.message-carousel {
+    display: flex;
+    /* Permite el deslizamiento tipo 'snap' al centro */
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory; 
+    -webkit-overflow-scrolling: touch; 
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    /* Ajuste para que los ítems se centren mejor inicialmente */
+    padding-left: 12.5%; /* Empuje inicial para centrar el primer elemento */
+}
+
+/* Ocultar la barra de scroll para un diseño más limpio */
+.message-carousel::-webkit-scrollbar { display: none; }
+.message-carousel { -ms-overflow-style: none; scrollbar-width: none; }
+
+.carousel-item {
+    /* Estilo de cada "caja redondeada" */
+    flex: 0 0 75%; /* Ocupa el 75% del ancho del contenedor disponible */
+    max-width: 350px; /* Más compacto en pantallas grandes */
+    min-width: 70vw; /* Sigue siendo responsivo en móvil */
+    margin: 0 15px; 
+    padding: 30px;
+    background-color: var(--color-text-light);
+    border-radius: 30px; /* ¡Más redondeado! */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    scroll-snap-align: center; /* Se centra automáticamente al soltar */
+    transition: opacity 0.5s, transform 0.5s, box-shadow 0.5s;
+    opacity: 0.4; /* Opacidad inicial para los no seleccionados (más translúcido) */
+    transform: scale(0.9); /* Más pequeño para los no seleccionados */
+}
+
+/* El ítem que está más cerca del centro se ve así: */
+.carousel-item.active {
+    opacity: 1; /* Completamente visible */
+    transform: scale(1.05); /* Ligeramente más grande para que resalte */
+    box-shadow: 0 15px 30px rgba(255, 105, 180, 0.5); /* Sombra de acento rosa más fuerte */
+}
+
+
+/*
+=============================
+5. ESTILOS DE TEXTO Y COMPONENTES
+=============================
+*/
+
+/* Contenedor para centrar los botones */
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espacio entre los botones */
+    margin-top: 30px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.nav-button {
+    background-color: var(--color-secondary-accent); /* Fucsia / Rosa chicle */
+    color: var(--color-text-light);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(255, 105, 180, 0.4);
+}
+
+.nav-button:hover {
+    background-color: #f05a9f; /* Un tono más oscuro de fucsia */
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(255, 105, 180, 0.6);
+}
+
+.nav-button:active {
+    transform: scale(0.98);
+}
+.title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    margin-bottom: 30px;
+    opacity: 0;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1.title {
+    font-size: 2rem; /* Ajusta el tamaño según lo que necesites */
+}
+
+.main-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 6vw, 4rem);
+    color: var(--color-text-dark); /* Color oscuro para que contraste con la caja transparente */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.accent-word {
+    font-weight: 700;
+    color: var(--color-secondary-accent);
+}
+
+.signature {
+    display: block;
+    margin-top: 25px;
+    text-align: right;
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-primary-dark);
+    font-weight: 700;
+}
+
+.cta-button {
+    background-color: var(--color-secondary-accent);
+    color: var(--color-text-light);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    margin-top: 30px;
+}
+
+.cta-button:hover {
+    background-color: #f05a9f;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+    animation: none;
+}
+
+/* ANIMACIONES */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 15px rgba(255, 105, 180, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+    }
+}
+
+.type-animation {
+    animation: 
+        fadeInTitle 1s ease-out forwards,
+        typing 2s steps(40, end) 1s forwards;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+@keyframes fadeInTitle {
+    to { opacity: 1; }
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+.fade-in-delay {
+    animation: fadeInContent 1s ease-out 2.5s forwards;
+}
+
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

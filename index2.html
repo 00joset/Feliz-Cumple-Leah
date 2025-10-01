@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Mensaje para Leah</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎉</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-wrap">
+        <section class="card-container" id="introCard">
+            <h1 class="title type-animation">
+                Primero que Todo
+            </h1>
+
+            <div class="message-content fade-in-delay">
+                <p>
+                    ¡Hola, Leah! Sé que este regalo de cumpleaños se ha demorado un poquito, es que me he esforzado en hacer esto bien 😅 Pero de verdad, de corazón, no quería dejar pasar la oportunidad de decirte lo mucho que te aprecio, <span class="accent-word">como amiga</span>. 
+                </p>
+                <p>
+                    Aunque esta carta llegue tarde, de verdad sos una amiga que quiero demasiado. Espero que este detallito te alegre el día.
+                </p>
+                <p>
+                    <span class="signature">Con cariño de  "El Muelas".</span>
+                </p>
+            </div>
+
+            <button id="startButton" class="cta-button pulse-animation">
+                ¡Presiona aquí para el resto del detalle!
+            </button>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            // Animación: La carta se encoge y desaparece antes de ir a la otra página
+            const card = document.getElementById('introCard');
+            card.classList.add('scale-out');
+
+            // Pequeña pausa para que la animación se vea
+            setTimeout(() => {
+                window.location.href = 'felicitaciones.html';
+            }, 500); // 500ms es la duración de la animación de 'scale-out'
+        });
+    </script>
+</body>
+</html>
